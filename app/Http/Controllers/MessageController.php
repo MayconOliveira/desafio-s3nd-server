@@ -9,6 +9,9 @@ use App\Events\MessageEvent;
 class MessageController extends Controller
 {
 
+    /**
+     * Metodo responsável por gravar a mensagem.
+     */
     public function save(Request $request)
     {
         if(Message::create($request->all())){

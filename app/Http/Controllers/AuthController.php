@@ -9,6 +9,10 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+    /**
+     * Metodo de autenticação do usuário.
+     * Para criar a sessão do usuário por nome e senha.
+     */
     public function login(Request $request)
     {
         $user = User::where(['email'=> $request->email])->first();

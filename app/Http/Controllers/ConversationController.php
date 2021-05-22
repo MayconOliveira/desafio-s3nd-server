@@ -8,14 +8,14 @@ use App\Models\User;
 
 class ConversationController extends Controller
 {
-
     /**
      * Método responsável por inciar uma conversar com o atendente
      */
     public function init()
     {
+        $conversation = Conversation::where(['status'=> 1])->get()->toArray();
+
         if(auth()->user()->support == 0){
-            $conversation = Conversation::where(['status'=> 1])->get()->toArray();
 
             if(sizeof($conversation) > 0){
                 return response()->json(array('status'=>0,'message'=>'O suporte está em atendimento, aguarde sua vez.'));
@@ -28,6 +28,10 @@ class ConversationController extends Controller
             if($conversation){
                 return response()->json(array('status'=>1));
             }
+        }
+
+        if(auth()->user()->support == 1 && sizeof($conversation) > 0){
+            return response()->json(array('status'=>1));
         }
 
         return response()->json(array('status'=> 0,'message'=>"Aguardando um cliente para atendimento"));
